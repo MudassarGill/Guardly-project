@@ -114,6 +114,7 @@ flutter:
     #  Parent And Child Screens
     - "assets/images/parent1.png"
     - "assets/images/child1.png"
+    - "assets/images/ScaningFrame.png"
     - "assets/SVG/privacyProtected.png"
     #  Parent Screens
     - "assets/images/guidence.png"

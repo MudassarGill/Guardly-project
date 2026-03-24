@@ -45,6 +45,7 @@ class UImages {
     static const String scan = "assets/SVG/qrScan.svg";
     static const String otpPass = "assets/SVG/otp_pass.svg";
     static const String privacyProtected = "assets/SVG/privacyProtected.png";
+    static const String scaningFrame = "assets/images/ScaningFrame.png";
 
 
 }

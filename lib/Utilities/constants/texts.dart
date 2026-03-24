@@ -151,6 +151,7 @@ class UTexts {
 
   static const String sHTP = "Select how to Proceed";
   static const String sQRCode = "Scan QR code";
+  static const String scaning = "Scanning ......";
   static const String uRF = "User Reference Code";
   static const String cToDevice =
       "Enter the code below to connect this device to parent.";
@@ -183,4 +184,6 @@ class UTexts {
   static const String accessibleTitle = "Accessibility Permission";
   static const String accessibleSubtitle =
       "Access mobile phone internal permissions";
+
+  
 }
