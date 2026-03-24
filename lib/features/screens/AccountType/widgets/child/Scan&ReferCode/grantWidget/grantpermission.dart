@@ -59,7 +59,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
           },
         ),
         permissionItem(
-          icon: Icons.location_on,
+          icon: Icons.storage_rounded,
           title: UTexts.storageTitle,
           subtitle: UTexts.storageSubtitle,
           value: isStorageEnabled, // current state
@@ -70,7 +70,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
           },
         ),
         permissionItem(
-          icon: Icons.location_on,
+          icon: Icons.notification_add_rounded,
           title: UTexts.notifyTitle,
           subtitle: UTexts.notifySubtitle,
           value: isNotificationsEnabled, // current state
@@ -81,7 +81,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
           },
         ),
         permissionItem(
-          icon: Icons.location_on,
+          icon: Icons.contacts_sharp,
           title: UTexts.contactTitle,
           subtitle: UTexts.contactSubtitle,
           value: isContactsEnabled, // current state
@@ -92,7 +92,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
           },
         ),
         permissionItem(
-          icon: Icons.location_on,
+          icon: Icons.accessibility_sharp,
           title: UTexts.accessibleTitle,
           subtitle: UTexts.accessibleSubtitle,
           value: isAccessibilityEnabled, // current state
@@ -113,7 +113,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
           ),
         ),
 
-        SizedBox(height: 20,),
+        SizedBox(height: 20),
 
         ForgotButtonContainer(text: UTexts.continueButton, onPressed: () {}),
       ],
@@ -161,7 +161,18 @@ class _PermissionHandlerState extends State<PermissionHandler> {
           ),
 
           // ✅ Switch Section
-          Switch(value: value, onChanged: onChanged),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+            activeThumbColor: Colors.white,
+            activeTrackColor: UColors.bprimary,
+
+            inactiveThumbColor: UColors.white,
+            inactiveTrackColor: UColors.haifwhite,
+
+            trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+            trackOutlineWidth: WidgetStateProperty.all(0),
+          ),
         ],
       ),
     );

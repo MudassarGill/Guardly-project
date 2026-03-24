@@ -28,6 +28,7 @@ class UColors {
   // Theme color Dark/White Mode
   static const Color light = Color(0xFFF6F6F6);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color haifwhite = Color(0xFFE0E0E0);
   static const Color black = Color(0x00000000);
   static const Color dark = Color(0xFF272727);
   static const Color dark_500 = Color.fromARGB(75, 39, 39, 39);
