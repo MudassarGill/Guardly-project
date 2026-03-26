@@ -15,7 +15,7 @@ class GrantPermission extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: 9, vertical: 12),
           children: [
             // Top Row
             Row(

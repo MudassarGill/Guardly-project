@@ -108,7 +108,7 @@ class _PermissionHandlerState extends State<PermissionHandler> {
         Center(
           child: SizedBox(
             height: 160,
-            width: 320, // image height adjust karo yahan
+            width: 308, // image height adjust karo yahan
             child: Image.asset(UImages.privacyProtected, fit: BoxFit.contain),
           ),
         ),
@@ -134,46 +134,58 @@ class _PermissionHandlerState extends State<PermissionHandler> {
         color: UColors.white,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Icon Section
-          Icon(icon, color: UColors.iconPrimary),
-          const SizedBox(width: 10),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Icon Section --> Padding / Sized box use plz
+            Padding(
+              padding: EdgeInsets.only(top: 2),
+              child: Icon(icon, color: UColors.iconPrimary),
+            ),
+            const SizedBox(width: 15),
 
-          // Text section
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            // Text section
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: UColors.subtextSecondary),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+
+            // ✅ Switch Section
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  subtitle,
-                  style: TextStyle(color: UColors.subtextSecondary),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                Switch(
+                  value: value,
+                  onChanged: onChanged,
+                  activeThumbColor: Colors.white,
+                  activeTrackColor: UColors.bprimary,
+
+                  inactiveThumbColor: UColors.white,
+                  inactiveTrackColor: UColors.haifwhite,
+
+                  trackOutlineColor: WidgetStateProperty.all(
+                    Colors.transparent,
+                  ),
+                  trackOutlineWidth: WidgetStateProperty.all(0),
                 ),
               ],
             ),
-          ),
-
-          // ✅ Switch Section
-          Switch(
-            value: value,
-            onChanged: onChanged,
-            activeThumbColor: Colors.white,
-            activeTrackColor: UColors.bprimary,
-
-            inactiveThumbColor: UColors.white,
-            inactiveTrackColor: UColors.haifwhite,
-
-            trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-            trackOutlineWidth: WidgetStateProperty.all(0),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
