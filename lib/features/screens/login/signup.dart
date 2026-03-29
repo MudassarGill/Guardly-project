@@ -16,6 +16,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -68,7 +69,7 @@ class SignupPage extends StatelessWidget {
         right: USizes.defaultSpace,
         left: USizes.defaultSpace,
         // top: UDeviceHelper.getAppBarHeight(),
-        top: 90,
+        top: 85,
       ),
       child: Column(
         children: [
@@ -78,7 +79,7 @@ class SignupPage extends StatelessWidget {
           // ! Image
           Center(
             child: SizedBox(
-              height: 110,
+              height: 90,
               width: 90, // image height adjust karo yahan
               child: Image.asset(image, fit: BoxFit.contain),
             ),
@@ -88,11 +89,11 @@ class SignupPage extends StatelessWidget {
           // !  Title
           Text(
             title,
-            style: Theme.of(context).textTheme.headlineLarge,
+            style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
 
           /***************
           * FORM PART *
@@ -128,7 +129,7 @@ class SignupPage extends StatelessWidget {
 
           TextFormField(
             decoration: InputDecoration(
-              prefix: Icon(Iconsax.direct_right),
+              // prefix: Icon(Iconsax.direct_right),
               labelText: UTexts.email,
               hintText: "Enter your email",
               filled: true,
@@ -140,7 +141,7 @@ class SignupPage extends StatelessWidget {
 
           TextFormField(
             decoration: InputDecoration(
-              prefix: Icon(Iconsax.direct_right),
+              // prefix: Icon(Iconsax.direct_right),
               labelText: UTexts.cAPass,
               hintText: "Enter your Password",
               suffixIcon: Icon(Iconsax.eye),
@@ -153,7 +154,7 @@ class SignupPage extends StatelessWidget {
 
           TextFormField(
             decoration: InputDecoration(
-              prefix: Icon(Iconsax.direct_right),
+              // prefix: Icon(Iconsax.direct_right),
               labelText: UTexts.confirmPassword,
               hintText: UTexts.confirmYPassword,
               suffixIcon: Icon(Iconsax.eye),
@@ -189,7 +190,7 @@ class SignupPage extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: 10),
+          SizedBox(height: 0),
 
           Center(
             child: Row(

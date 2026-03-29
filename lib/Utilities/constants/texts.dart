@@ -198,7 +198,7 @@ class UTexts {
   static const String dOB = "Date of Birth *";
   static const String enterDOB = "MM / DD / YYYY";
   
-  static const String gender = "Gender";
+  static const String gender = "Gender *";
   static const String male = "Male";
   static const String female = "Female";
   static const String other = "Other";

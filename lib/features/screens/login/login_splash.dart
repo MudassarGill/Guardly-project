@@ -78,7 +78,7 @@ class NotifyPage extends StatelessWidget {
             style: TextStyle().copyWith(
               fontSize: 18.0,
               // fontWeight: FontWeight.bold,
-              color: UColors.textPrimary500,
+              color: UColors.secondaryBlack,
             ),
           ),
 

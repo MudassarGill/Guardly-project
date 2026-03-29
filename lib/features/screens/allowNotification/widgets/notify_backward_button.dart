@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:mindshield/features/authentication/controllers/onboarding/onboarding_controller.dart';
 import 'package:mindshield/common/widgets/button/baclward_elevated_button.dart';
 import 'package:get/get.dart';
-import 'package:mindshield/Utilities/constants/colors.dart';
+// import 'package:mindshield/Utilities/constants/colors.dart';
 
 // Next Button Widget
 class NotifyBackButton extends StatelessWidget {
@@ -23,10 +23,10 @@ class NotifyBackButton extends StatelessWidget {
           "assets/notification/backward.svg",
           width: 34,
           height: 34,
-          colorFilter: const ColorFilter.mode(
-            UColors.secondaryBlack,
-            BlendMode.srcIn,
-          ),
+          // colorFilter: const ColorFilter.mode(
+          //   UColors.secondaryBlack,
+          //   BlendMode.srcIn,
+          // ),
         ),
       ),
     );

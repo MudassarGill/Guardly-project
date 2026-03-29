@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
         right: USizes.defaultSpace,
         left: USizes.defaultSpace,
         // top: UDeviceHelper.getAppBarHeight(),
-        top: 90,
+        top: 80,
       ),
       child: Column(
         children: [
