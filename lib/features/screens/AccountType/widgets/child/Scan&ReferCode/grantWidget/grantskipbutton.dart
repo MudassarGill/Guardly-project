@@ -10,11 +10,11 @@ class GrantSkipButton extends StatelessWidget {
     return Stack(
       children: [
         TextButton(
-          onPressed: () => Get.to(() => Profile()),
+          onPressed: () => Get.to(() => ProfileBodySection()),
           child: Text(
             "Skip>>",
             style: TextStyle(
-              color: UColors.bprimary,
+              color: UColors.textPrimary800,
               fontSize: 18,
               fontWeight: FontWeight.w400,
             ),

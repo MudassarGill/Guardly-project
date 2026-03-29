@@ -16,6 +16,7 @@ class UColors {
   static const Color textSecondary = Color.fromARGB(255, 121, 120, 120);
   static const Color subtext = Color(0xFF64748B);
   static const Color subtextSecondary = Color(0xFF64748B);
+  static const Color subtextSecondaryBold = Color(0xFF9E9E9E);
   static const Color textWhite = Color(0xFFF6F6F6);
   static const Color green_600 = Color.fromRGBO(77, 182, 172, 1);
   static const Color grey_400 = Color.fromRGBO(189, 189, 189, 1); 
@@ -44,6 +45,9 @@ class UColors {
 
   // Icon Color
   static const Color iconPrimary = Color(0xFF64748B);
+
+  // Border Color
+  static const Color borderPrimary = Color.fromARGB(103, 143, 143, 143);
 }
 
 
