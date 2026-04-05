@@ -12,7 +12,7 @@ class OnBoardingDotNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = OnboardingController.instance;
     return Positioned(
-      top: 420,
+      top: 400,
       left: 0,
       right: 0,
       child: Align(

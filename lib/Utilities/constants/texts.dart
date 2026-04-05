@@ -2,6 +2,12 @@ class UTexts {
   UTexts._();
 
   // /***********************
+  //  * Global Button *
+  //  ***********************/
+
+  static const String skip = "Skip>>";
+
+  // /***********************
   //  *  Onboarding Page *
   //  ***********************/
 
@@ -197,19 +203,9 @@ class UTexts {
   static const String selectAge = "Select age";
   static const String dOB = "Date of Birth *";
   static const String enterDOB = "MM / DD / YYYY";
-  
+
   static const String gender = "Gender *";
   static const String male = "Male";
   static const String female = "Female";
   static const String other = "Other";
-
-
-
-  
-
-
-
-
-
-  
 }

@@ -19,7 +19,7 @@ class UColors {
   static const Color subtextSecondaryBold = Color(0xFF9E9E9E);
   static const Color textWhite = Color(0xFFF6F6F6);
   static const Color green_600 = Color.fromRGBO(77, 182, 172, 1);
-  static const Color grey_400 = Color.fromRGBO(189, 189, 189, 1); 
+  static const Color grey_400 = Color.fromRGBO(189, 189, 189, 1);
   static const Color green_800 = Color(0xFF009688);
 
   // Indicator Colors
@@ -48,6 +48,10 @@ class UColors {
 
   // Border Color
   static const Color borderPrimary = Color.fromARGB(103, 143, 143, 143);
+  // Back Button
+
+  static const Color backButton_800 = Color(0xFF9ca3af);
+  static const Color backButton_600 = Color(0xFFd1d5db);
 }
 
 

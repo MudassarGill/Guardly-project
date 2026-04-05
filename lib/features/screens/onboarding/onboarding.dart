@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mindshield/Utilities/constants/images.dart';
 import 'package:mindshield/Utilities/constants/texts.dart';
-// import 'package:mindshield/Utilities/helpers/device_helpers.dart';
+import 'package:mindshield/common/widgets/button/u_elevated_button.dart';
 import 'package:mindshield/features/screens/onboarding/widgets/onboarding_page.dart';
 import 'package:mindshield/features/screens/onboarding/widgets/on_boarding_dot_indicators.dart';
-import 'package:mindshield/features/screens/onboarding/widgets/onBoardingNextButton.dart';
-import 'package:mindshield/features/screens/onboarding/widgets/skipButton.dart';
 import 'package:get/get.dart';
 import 'package:mindshield/features/authentication/controllers/onboarding/onboarding_controller.dart';
-// import 'package:mindshield/common/widgets/button/elevated_button.dart';
 import 'package:mindshield/Utilities/constants/sizes.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:mindshield/Utilities/helpers/device_helpers.dart';
-import 'package:mindshield/common/widgets/button/baclward_elevated_button.dart';
 import 'package:mindshield/Utilities/constants/colors.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -69,45 +63,62 @@ class OnboardingScreen extends StatelessWidget {
 
           // Indicator Dots
           OnBoardingDotNavigation(),
-          // Next Button
-          OnBoardingNextButton(),
-          // Skip Button
-          SkipButton(),
 
-          OnboardingBackButton(),
+          // Next Button
+          Positioned(
+            // left: 0,
+            right: USizes.spaceBtwItems * 1.5,
+            bottom: USizes.spaceBtwItems * 3,
+            child: UElevatedButton.circle(
+              icon: Icons.arrow_forward,
+              bPrimaryColor1: UColors.bprimary,
+              bPrimaryColor2: UColors.green_800,
+              onPressed: controller.nextPage,
+              width: 65,
+              height: 65,
+              elevation: 1,
+              // text: "Submit",
+            ),
+          ),
+
+          // Skip Button
+          // SkipButton(),
+          Obx(
+            () => controller.currentIndex.value == 5
+                ? SizedBox()
+                : Positioned(
+                    top: 45,
+                    right: USizes.spaceBtwItems,
+                    child: UElevatedButton.textButton(
+                      onPressed: controller.skipPage,
+                      text: UTexts.skip,
+                      textColor: UColors.bprimary,
+                    ),
+                  ),
+          ),
+
+          // Back Button
+          Obx(() {
+            // Show/hide button based on controller
+            if (!controller.showBackButton.value) return const SizedBox();
+            return Positioned(
+              left: USizes.spaceBtwItems * 1.5,
+              bottom: USizes.spaceBtwItems * 3,
+              child: UElevatedButton.circle(
+                icon: Icons.arrow_back,
+                onPressed: controller.backPage,
+                bPrimaryColor1: UColors.backButton_600,
+                bPrimaryColor2: UColors.backButton_800,
+                iconColor: UColors.backButton_800,
+                width: 65, // Circle Width
+                height: 65, // Circle Height
+                elevation: 1,
+                isVisible: controller.canGoBack,
+              ),
+            );
+          }),
         ],
       ),
     );
-  }
-}
-
-class OnboardingBackButton extends StatelessWidget {
-  const OnboardingBackButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = OnboardingController.instance;
-
-    return Obx(() {
-      // Show/hide button based on controller
-      if (!controller.showBackButton.value) return const SizedBox();
-
-      return Positioned(
-        left: USizes.spaceBtwItems * 1.5,
-        bottom: USizes.spaceBtwItems * 3,
-        child: UBackElevatedButton(
-          onPressed: controller.backPage,
-          child: SvgPicture.asset(
-            "assets/SVG/arrow-left-solid-full.svg",
-            width: 24,
-            height: 24,
-            colorFilter: const ColorFilter.mode(
-              UColors.textWhite,
-              BlendMode.srcIn,
-            ),
-          ),
-        ),
-      );
-    });
   }
 }

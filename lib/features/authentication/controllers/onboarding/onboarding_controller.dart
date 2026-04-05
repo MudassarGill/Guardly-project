@@ -3,14 +3,12 @@ import 'package:get/get.dart';
 import 'package:mindshield/features/screens/allowNotification/allow_notification.dart';
 
 class OnboardingController extends GetxController {
-
   static OnboardingController get instance => Get.find();
 
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(initialPage: 0);
   RxInt currentIndex = 0.obs;
   RxBool showBackButton = false.obs; // 👈 first page par hide
-
-
+  bool get canGoBack => currentIndex.value > 0 && currentIndex.value != 5;
 
   // Update current index when page scrolls
   void updatePageIndicator(int index) {
@@ -24,36 +22,39 @@ class OnboardingController extends GetxController {
   }
 
   // Go to next page
-void nextPage() {
-  if (currentIndex.value == 5) {
-    Get.to(() => AllowNotificationsScreen()); // 👈 back possible
-  } else {
-    currentIndex.value++;
-    pageController.nextPage(
+  void nextPage() async {
+    if (currentIndex.value == 5) {
+      Get.to(() => AllowNotificationsScreen());
+      return;
+    }
+
+    final nextIndex = currentIndex.value + 1;
+
+    await pageController.animateToPage(
+      nextIndex,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
-  }
-}
 
-void backPage() {
-  if (currentIndex.value == 0) {
-    // First page, no back
-    return;
-  } else {
-    // Normal previous page
-    currentIndex.value--;
-    pageController.previousPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    currentIndex.value = nextIndex;
   }
 
-  // Update back button visibility
-  showBackButton.value = currentIndex.value != 0; // 👈 first page hide
-}
+  void backPage() {
+    if (!canGoBack) {
+      // First page, no back
+      return;
+    } else {
+      // Normal previous page
+      currentIndex.value--;
+      pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
 
-
+    // Update back button visibility
+    showBackButton.value = currentIndex.value != 0; // 👈 first page hide
+  }
 
   // Skip to last page
   void skipPage() {

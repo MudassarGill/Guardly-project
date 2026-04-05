@@ -21,7 +21,7 @@ class OnboardingPage extends StatelessWidget {
         right: USizes.defaultSpace,
         left: USizes.defaultSpace,
         // top: UDeviceHelper.getAppBarHeight(),
-        top: 120,
+        top: 110,
       ),
       child: Column(
         children: [
@@ -39,7 +39,7 @@ class OnboardingPage extends StatelessWidget {
             subTitle,
             textAlign: TextAlign.center,
             style: TextStyle().copyWith(
-              fontSize: 16.0,
+              fontSize: 15.0,
               fontWeight: FontWeight.bold,
               color: UColors.textSecondary,
             ),
