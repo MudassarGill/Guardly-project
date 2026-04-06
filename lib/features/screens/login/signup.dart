@@ -8,6 +8,7 @@ import 'package:mindshield/common/widgets/button/rounded_rectangle_forward_eleva
 import 'package:get/get.dart';
 import 'package:mindshield/features/screens/login/login.dart';
 import 'package:mindshield/Utilities/theme/theme.dart';
+import 'package:mindshield/backend/api_service.dart';
 
 
 class SignupScreen extends StatelessWidget {
@@ -58,10 +59,62 @@ class SignupScreen extends StatelessWidget {
   }
 }
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({super.key, required this.image, required this.title});
   final String image;
   final String title;
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _isLoading = false;
+
+  void _handleRegister() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
+
+    if (email.isEmpty || password.isEmpty || firstName.isEmpty || lastName.isEmpty) {
+      Get.snackbar('Error', 'Please fill in all fields',
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
+    if (password != confirmPassword) {
+      Get.snackbar('Error', 'Passwords do not match',
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final result = await ApiService.register(email, password, firstName, lastName);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (result['success']) {
+      Get.snackbar('Success', 'Account created successfully!',
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.to(() => LoginScreen());
+    } else {
+      Get.snackbar('Registration Failed', result['message'],
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -81,14 +134,14 @@ class SignupPage extends StatelessWidget {
             child: SizedBox(
               height: 90,
               width: 90, // image height adjust karo yahan
-              child: Image.asset(image, fit: BoxFit.contain),
+              child: Image.asset(widget.image, fit: BoxFit.contain),
             ),
           ),
 
           const SizedBox(height: 5),
           // !  Title
           Text(
-            title,
+            widget.title,
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
@@ -103,6 +156,7 @@ class SignupPage extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
+                  controller: _firstNameController,
                   decoration: InputDecoration(
                     labelText: UTexts.firstName,
                     hintText: "Enter your First Name",
@@ -114,6 +168,7 @@ class SignupPage extends StatelessWidget {
               SizedBox(width: USizes.spaceBtwInputFields), // 👈 gap here
               Expanded(
                 child: TextFormField(
+                  controller: _lastNameController,
                   decoration: InputDecoration(
                     labelText: UTexts.lastName,
                     hintText: "Enter your Last Name",
@@ -128,6 +183,7 @@ class SignupPage extends StatelessWidget {
           SizedBox(height: 10),
 
           TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
               // prefix: Icon(Iconsax.direct_right),
               labelText: UTexts.email,
@@ -140,6 +196,8 @@ class SignupPage extends StatelessWidget {
           SizedBox(height: USizes.spaceBtwInputFields),
 
           TextFormField(
+            controller: _passwordController,
+            obscureText: true,
             decoration: InputDecoration(
               // prefix: Icon(Iconsax.direct_right),
               labelText: UTexts.cAPass,
@@ -153,6 +211,8 @@ class SignupPage extends StatelessWidget {
           SizedBox(height: USizes.spaceBtwInputFields),
 
           TextFormField(
+            controller: _confirmPasswordController,
+            obscureText: true,
             decoration: InputDecoration(
               // prefix: Icon(Iconsax.direct_right),
               labelText: UTexts.confirmPassword,
@@ -166,7 +226,9 @@ class SignupPage extends StatelessWidget {
           //         Row
           SizedBox(height: 10),
           // SignIn
-          UElevatedButton(onPressed: () => Get.to(() => LoginScreen()), child: Text(UTexts.continueButton)),
+          _isLoading
+              ? const CircularProgressIndicator()
+              : UElevatedButton(onPressed: _handleRegister, child: Text(UTexts.continueButton)),
           SizedBox(height: USizes.spaceBtwItems / 2),
           // Create Account Button
 

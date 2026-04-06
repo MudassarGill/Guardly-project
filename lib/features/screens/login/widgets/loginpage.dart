@@ -10,11 +10,52 @@ import 'package:mindshield/features/screens/forgotpassword/forgotpass.dart';
 import 'package:mindshield/features/screens/login/signup.dart';
 import 'package:mindshield/Utilities/theme/theme.dart';
 import 'package:mindshield/features/screens/login/welcome.dart';
+import 'package:mindshield/backend/api_service.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.image, required this.title});
   final String image;
   final String title;
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  void _handleLogin() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      Get.snackbar('Error', 'Please fill in all fields',
+          snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final result = await ApiService.login(email, password);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (result['success']) {
+      Get.snackbar('Success', 'Logged in successfully!',
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.to(() => const WellcomeScreen());
+    } else {
+      Get.snackbar('Login Failed', result['message'],
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,14 +75,14 @@ class LoginPage extends StatelessWidget {
             child: SizedBox(
               height: 110,
               width: 90, // image height adjust karo yahan
-              child: Image.asset(image, fit: BoxFit.contain),
+              child: Image.asset(widget.image, fit: BoxFit.contain),
             ),
           ),
 
           const SizedBox(height: 5),
           // !  Title
           Text(
-            title,
+            widget.title,
             style: Theme.of(context).textTheme.headlineLarge,
             textAlign: TextAlign.center,
           ),
@@ -51,6 +92,7 @@ class LoginPage extends StatelessWidget {
           * FORM PART *
            ***************/
           TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
               labelText: UTexts.email,
               hintText: "Enter your email",
@@ -62,6 +104,8 @@ class LoginPage extends StatelessWidget {
           SizedBox(height: USizes.spaceBtwInputFields),
 
           TextFormField(
+            controller: _passwordController,
+            obscureText: true,
             decoration: InputDecoration(
               // prefix: Icon(Iconsax.direct_right),
               labelText: UTexts.password,
@@ -103,10 +147,12 @@ class LoginPage extends StatelessWidget {
 
           SizedBox(height: 10),
           // SignIn
-          UElevatedButton(
-            onPressed: () => Get.to(() => const WellcomeScreen()),
-            child: Text(UTexts.logIn),
-          ),
+          _isLoading
+              ? const CircularProgressIndicator()
+              : UElevatedButton(
+                  onPressed: _handleLogin,
+                  child: Text(UTexts.logIn),
+                ),
           SizedBox(height: USizes.spaceBtwItems / 2),
           // Create Account Button
 
