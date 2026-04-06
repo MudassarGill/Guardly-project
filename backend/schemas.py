@@ -34,3 +34,9 @@ class BlockAppRequest(BaseModel):
 
 class LockDeviceRequest(BaseModel):
     child_id: int
+
+class OTPResponse(BaseModel):
+    otp_code: str
+
+class LinkAccountRequest(BaseModel):
+    otp_code: str

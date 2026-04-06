@@ -12,8 +12,36 @@ import 'package:mindshield/features/screens/forgotpassword/widgets/forgotbackbut
 //  * //   MAIN BRAIN CLASS *
 //  *************************/
 
-class ShareQR extends StatelessWidget {
+import 'package:mindshield/backend/api_service.dart';
+
+class ShareQR extends StatefulWidget {
   const ShareQR({super.key});
+
+  @override
+  State<ShareQR> createState() => _ShareQRState();
+}
+
+class _ShareQRState extends State<ShareQR> {
+  String _otpCode = "Wait...";
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchOTP();
+  }
+
+  void _fetchOTP() async {
+    final result = await ApiService.generateOtp();
+    if (result['success']) {
+      setState(() {
+        _otpCode = result['otp'];
+      });
+    } else {
+      setState(() {
+        _otpCode = "Error";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +79,7 @@ class ShareQR extends StatelessWidget {
             bottom: 165,
             left: 15,
             right: 15,
-            child: OTPCard(code: "932255"),
+            child: OTPCard(code: _otpCode),
           ),
 
           ForgotBackButton(),

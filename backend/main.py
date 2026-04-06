@@ -2,6 +2,8 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 import models, schemas, auth
 from database import engine, get_db
+import random
+import string
 
 # Create the database tables
 models.Base.metadata.create_all(bind=engine)
@@ -41,4 +43,32 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     
     # Generate Token
     access_token = auth.create_access_token(data={"sub": db_user.email, "id": db_user.id, "type": db_user.user_type})
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "user_id": db_user.id}
+
+@app.post("/api/pair/generate_otp", response_model=schemas.OTPResponse)
+def generate_otp(parent_id: int, db: Session = Depends(get_db)):
+    # Create 6 digit OTP
+    otp_code = ''.join(random.choices(string.digits, k=6))
+    
+    # Store OTP
+    store = models.OTPStore(parent_id=parent_id, otp_code=otp_code)
+    db.add(store)
+    db.commit()
+    
+    return {"otp_code": otp_code}
+
+@app.post("/api/pair/link")
+def link_account(child_id: int, request: schemas.LinkAccountRequest, db: Session = Depends(get_db)):
+    store = db.query(models.OTPStore).filter(models.OTPStore.otp_code == request.otp_code).first()
+    if not store:
+        raise HTTPException(status_code=400, detail="InvalidOTP")
+        
+    # Link parent and child
+    link = models.ParentChild(parent_id=store.parent_id, child_id=child_id)
+    db.add(link)
+    
+    # Clean OTP
+    db.delete(store)
+    db.commit()
+    
+    return {"status": "success", "parent_id": store.parent_id}

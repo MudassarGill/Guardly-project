@@ -8,6 +8,8 @@ import 'package:mindshield/Utilities/constants/colors.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import 'package:mindshield/backend/api_service.dart';
+
 class CReferCode extends StatelessWidget {
   const CReferCode({super.key});
 
@@ -44,10 +46,35 @@ class CReferCode extends StatelessWidget {
   }
 }
 
-class HelperVerifyEmail extends StatelessWidget {
+class HelperVerifyEmail extends StatefulWidget {
   const HelperVerifyEmail({super.key, required this.title, required this.send});
   final String title;
   final String send;
+
+  @override
+  State<HelperVerifyEmail> createState() => _HelperVerifyEmailState();
+}
+
+class _HelperVerifyEmailState extends State<HelperVerifyEmail> {
+  final _pinController = TextEditingController();
+  bool _isLoading = false;
+
+  void _submitOTP() async {
+    final pin = _pinController.text;
+    if (pin.length < 6) return;
+    
+    setState(() { _isLoading = true; });
+    final result = await ApiService.linkAccount(pin);
+    setState(() { _isLoading = false; });
+    
+    if (result['success']) {
+      Get.snackbar('Linked!', 'Account connected successfully!', backgroundColor: Colors.green, colorText: Colors.white);
+      Get.to(() => const GrantPermission());
+    } else {
+      Get.snackbar('Error', result['message'], backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -64,7 +91,7 @@ class HelperVerifyEmail extends StatelessWidget {
            ***************/
           // ! Large Title
           Text(
-            title,
+            widget.title,
             style: Theme.of(context).textTheme.headlineLarge,
             textAlign: TextAlign.center,
           ),
@@ -115,14 +142,15 @@ class HelperVerifyEmail extends StatelessWidget {
             ),
 
             enableActiveFill: true,
+            controller: _pinController,
             onChanged: (value) {},
-            onCompleted: (value) {},
+            onCompleted: (value) => _submitOTP(),
           ),
 
           const SizedBox(height: 20),
 
           Text(
-            send,
+            widget.send,
             style: TextStyle().copyWith(
               fontSize: 18.0,
               // fontWeight: FontWeight.bold,
@@ -130,6 +158,9 @@ class HelperVerifyEmail extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
+          
+          const SizedBox(height: 20),
+          _isLoading ? const CircularProgressIndicator() : const SizedBox(),
         ],
       ),
     );

@@ -52,3 +52,11 @@ class Rule(Base):
     rule_type = Column(String)
     rule_value = Column(String)
     is_active = Column(Boolean, default=True)
+
+class OTPStore(Base):
+    __tablename__ = "otp_store"
+
+    id = Column(Integer, primary_key=True, index=True)
+    parent_id = Column(Integer, ForeignKey("users.id"))
+    otp_code = Column(String, unique=True, index=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
